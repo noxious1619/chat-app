@@ -26,7 +26,7 @@ const ChatContainer = ({selectedUser, setSelectedUser}) => {
         <img src={assets.help_icon} alt="" className='max-md:hidden max-w-5' />
       </div>
       {/* ---------chat area--------- */}
-      <div className= 'flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6]'>
+      <div className= 'flex flex-col h-[calc(100%-120px)] overflow-y-scroll p-3 pb-6'>
         {messagesDummyData.map((msg, index)=> (
           <div key={index} className={`flex items-end gap-2 justify-end ${msg.senderId !== '680f50e4f10f3cd28382ecf9' && 'flex-row-reverse'}`}>
             {msg.image ? (
@@ -52,7 +52,7 @@ const ChatContainer = ({selectedUser, setSelectedUser}) => {
           className='flex-1 text-sm p-3 border-none rounded-lg outline-none text-white placeholder-gray-400' />
           <input type="file" id='image' accept='image/png, image/jpeg' hidden />
           <label htmlFor="image">
-            <img src={assets.gallary_icon} alt="" className='w-5 mr-2 cursor-pointer' />
+            <img src={assets.gallery_icon} alt="" className='w-5 mr-2 cursor-pointer' />
           </label>
         </div>
         <img src={assets.send_button} alt="" className='w-7 cursor-pointer'/>
