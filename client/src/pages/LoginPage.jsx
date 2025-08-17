@@ -11,6 +11,16 @@ const LoginPage = () => {
   const [isDataSubmitted, setIsDataSubmitted] = useState(false)
 
 
+  const onSubmitHandler = (event)=> {
+    event.preventDefault();
+
+    if(currState === 'Sign Up' && !isDataSubmitted){
+      setIsDataSubmitted(true)
+      return;
+    }
+  }
+
+
   return (
     <div className='min-h-screen bg-cover flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl'>
 
@@ -19,10 +29,11 @@ const LoginPage = () => {
 
       {/* ---------right--------- */}
 
-      <form className='border-2 bg-white/10 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg'>
+      <form onSubmit={onSubmitHandler} className='border-2 bg-white/10 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg'>
       <h2 className='font-medium text-2xl flex justify-between items-center'>
         {currState}
-        <img src={assets.arrow_icon} alt="" className='w-5 cursor-pointer' />
+        {isDataSubmitted && <img onClick={()=> (setIsDataSubmitted(false))} src={assets.arrow_icon} alt="" className='w-5 cursor-pointer' />
+        }
       </h2>
       
       {currState === "Sign Up" && !isDataSubmitted && (
@@ -53,6 +64,15 @@ const LoginPage = () => {
       <div className='flex items-center gap-2 text-sm text-gray-500'>
         <input type="checkbox" /> 
         <p>Agree to the terms of use & privacy policy.</p>
+      </div>
+
+      <div className='flex flex-col gap-2'>
+        {currState === "Sign Up" ? (
+          <p className='text-sm text-gray-600'>Already have an accout? <span onClick={() =>{setCurrState("Login"); setIsDataSubmitted(false)}} className='font-medium text-violet-500 cursor-pointer'>Login here</span></p>
+        ) : (
+          <p className='text-sm text-gray-600'>Create an account
+          <span onClick={() => setCurrState("Sign Up")} className='font-medium text-violet-500 cursor-pointer' >Click here</span></p>
+        )}
       </div>
 
       </form>
