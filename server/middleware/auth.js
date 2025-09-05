@@ -1,11 +1,11 @@
 
-import User from "../models/User";
+import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
 //middleware to protect the route
 export const protectRoute = async (req, res, next,) => {
     try {
-        const token = req.header.token;
+        const token = req.headers.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const user = await User.findById(decoded.userId).select("-password");
 
@@ -16,6 +16,6 @@ export const protectRoute = async (req, res, next,) => {
 
     } catch (error) {
         console.log(error.message);
-        res.json({status: false, message: errormessage });
+        res.json({status: false, message: error.message });
     }
 }

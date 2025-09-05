@@ -1,8 +1,7 @@
 import cloudinary from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/User.js";
-import bcrypt from "bcryptjs"
-import cloudinary from "../lib/cloudinary.js";
+import bcrypt from "bcryptjs";
 
 
 // Sign up a new user
@@ -28,7 +27,7 @@ export const signup = async (req, res)=> {
 
         const token = generateToken(newUser._id);
 
-        res.json({success: true, newUser, token, message: "Account created successfull"})
+        res.json({success: true, newUser, token, message: "Account created successfully"})
     }
     catch (error){
         console.log(error.message);
@@ -41,17 +40,26 @@ export const signup = async (req, res)=> {
 export const login = async (req, res) => {
     try{
         const {  email, password } = req.body;
-        const userDate = User.findOne({email});
+        const userData = await User.findOne({email});
 
-        const isPasswordCorrect = await bcrypt.compare(password, userDate.password);
+        if (!userData) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, userData.password);
 
         if ( !isPasswordCorrect ){
             return res.json({success: false, message: "Invalid credentials"});
         }
 
-        const token = generateToken(newUser._id);
+        const token = generateToken(userData._id);
 
-        res.json({success: true, newUser, token, message: "Login successfull"})
+        res.json({
+            success: true,
+            user: userData,   // return the logged-in user
+            token,
+            message: "Login successful"
+        });
 
 
     }catch(error){

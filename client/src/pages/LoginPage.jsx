@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import assets from '../assets/assets'
+import { AuthContext } from '../../context/AuthContext'
 
 const LoginPage = () => {
 
@@ -8,7 +9,9 @@ const LoginPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [bio, setBio] = useState("")
-  const [isDataSubmitted, setIsDataSubmitted] = useState(false)
+  const [isDataSubmitted, setIsDataSubmitted] = useState(false);
+
+  const { login } = useContext(AuthContext)
 
 
   const onSubmitHandler = (event)=> {
@@ -18,6 +21,9 @@ const LoginPage = () => {
       setIsDataSubmitted(true)
       return;
     }
+
+    login(currState === "Sign Up" ? 'signup' : 'login', {fullName, email, password, bio})
+
   }
 
 
